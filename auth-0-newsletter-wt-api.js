@@ -26,6 +26,7 @@ const RESPONSE = {
 };
 
 const app = new express();
+
 app.use((req, res, next) => {
   const secrets = req.webtaskContext.secrets;
   const validateAccessToken = jwt({
@@ -48,7 +49,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.post('/subscribe', function(req, res){
+app.post('/subscribe', (req, res) => {
   // var email = req.body.email;
   // if(email){
   //   req.webtaskContext.storage.get(function(err, data){
@@ -84,7 +85,7 @@ app.post('/subscribe', function(req, res){
   res.end(JSON.stringify(RESPONSE.ERROR));
 })
 
-app.post('/unsubscribe', function(req, res){
+app.post('/unsubscribe', (req, res) => {
   // var email = req.body.email;
   // if(email){
   //   req.webtaskContext.storage.get(function(err, data){
@@ -122,7 +123,7 @@ app.post('/unsubscribe', function(req, res){
   res.end(JSON.stringify(RESPONSE.ERROR));
 })
 
-app.get('/subscribed', function(req, res){
+app.get('/subscribed', (req, res) => {
   // const email = req.params.email;
   // if(email){
   //   req.webtaskContext.storage.get(function(err, data){
