@@ -46,6 +46,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(bodyParser.json());
+
 app.locals.userProfile = (req) => {
   const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
   return axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
@@ -54,8 +56,6 @@ app.locals.userProfile = (req) => {
     })
     .catch(console.error);
 };
-
-app.use(bodyParser.json());
 
 app.post('/subscribe', (req, res) => {
   // var email = req.body.email;
@@ -130,7 +130,7 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
-  userProfile()
+  app.locals.userProfile(req)
     .then(result => {
       const email = result.email;
 
