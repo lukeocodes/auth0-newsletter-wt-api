@@ -46,14 +46,7 @@ app.use((req, res, next) => {
     .then(response => {
       console.log(response.data);
       
-      userProfile = {
-        user_id: response.data.sub,
-        user_info: {
-          name: response.data.nickname || response.data.name,
-          picture: response.data.picture,
-          maxScore: 0,
-        }
-      };
+      userProfile = response.data;
     })
     .catch(console.error);
     
