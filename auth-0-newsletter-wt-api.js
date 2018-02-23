@@ -27,100 +27,105 @@ const RESPONSE = {
 };
 
 app.post('/subscribe', function(req, res){
-  var email = req.body.email;
-  if(email){
-    req.webtaskContext.storage.get(function(err, data){
-      if(err){
-        res.writeHead(400, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify(RESPONSE.ERROR));
-      }
+  // var email = req.body.email;
+  // if(email){
+  //   req.webtaskContext.storage.get(function(err, data){
+  //     if(err){
+  //       res.writeHead(400, { 'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify(RESPONSE.ERROR));
+  //     }
 
-      data = data || [];
+  //     data = data || [];
 
-      if(_.indexOf(data, email) == -1){
-        data.push(email);
-        req.webtaskContext.storage.set(data, function(err){
-          if(err){
-            res.writeHead(400, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify(RESPONSE.ERROR));
-          } else {
-            res.writeHead(200, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify(RESPONSE.OK));
-          }
-        })
-      } else {
-        res.writeHead(400, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify(RESPONSE.DUPLICATE));
-      }
-    })
-  } else {
-    res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.end(JSON.stringify(RESPONSE.ERROR));
-  }
+  //     if(_.indexOf(data, email) == -1){
+  //       data.push(email);
+  //       req.webtaskContext.storage.set(data, function(err){
+  //         if(err){
+  //           res.writeHead(400, { 'Content-Type': 'application/json'});
+  //           res.end(JSON.stringify(RESPONSE.ERROR));
+  //         } else {
+  //           res.writeHead(200, { 'Content-Type': 'application/json'});
+  //           res.end(JSON.stringify(RESPONSE.OK));
+  //         }
+  //       })
+  //     } else {
+  //       res.writeHead(400, { 'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify(RESPONSE.DUPLICATE));
+  //     }
+  //   })
+  // } else {
+  //   res.writeHead(200, { 'Content-Type': 'application/json'});
+  //   es.end(JSON.stringify(RESPONSE.ERROR));
+  // }
 })
 
 app.post('/unsubscribe', function(req, res){
-  var email = req.body.email;
-  if(email){
-    req.webtaskContext.storage.get(function(err, data){
-      if(err){
-        res.writeHead(400, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify(RESPONSE.ERROR));
-      }
+  // var email = req.body.email;
+  // if(email){
+  //   req.webtaskContext.storage.get(function(err, data){
+  //     if(err){
+  //       res.writeHead(400, { 'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify(RESPONSE.ERROR));
+  //     }
 
-      data = data || [];
+  //     data = data || [];
 
-      const index = _.indexOf(data, email);
+  //     const index = _.indexOf(data, email);
 
-      if(index == -1){
-        res.writeHead(400, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify(RESPONSE.ERROR));
-      } else {
-        data.splice(index, 1);
-        req.webtaskContext.storage.set(data, function(err){
-          if(err){
-            res.writeHead(400, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify(RESPONSE.ERROR));
-          } else {
-            res.writeHead(200, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify(RESPONSE.OK));
-          }
-        })
-      }
-    })
-  } else {
-    res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.end(JSON.stringify(RESPONSE.ERROR));
-  }
+  //     if(index == -1){
+  //       res.writeHead(400, { 'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify(RESPONSE.ERROR));
+  //     } else {
+  //       data.splice(index, 1);
+  //       req.webtaskContext.storage.set(data, function(err){
+  //         if(err){
+  //           res.writeHead(400, { 'Content-Type': 'application/json'});
+  //           res.end(JSON.stringify(RESPONSE.ERROR));
+  //         } else {
+  //           res.writeHead(200, { 'Content-Type': 'application/json'});
+  //           res.end(JSON.stringify(RESPONSE.OK));
+  //         }
+  //       })
+  //     }
+  //   })
+  // } else {
+  //   res.writeHead(200, { 'Content-Type': 'application/json'});
+  //   res.end(JSON.stringify(RESPONSE.ERROR));
+  // }
+  console.log('here', req.user);
+  res.writeHead(200, { 'Content-Type': 'application/json'});
+  res.end(JSON.stringify(RESPONSE.ERROR));
 })
 
-app.get('/subscribed/:email', function(req, res){
-  const email = req.params.email;
-  if(email){
-    req.webtaskContext.storage.get(function(err, data){
-      if(err){
-        res.writeHead(400, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify(RESPONSE.ERROR));
-      }
+app.get('/subscribed', function(req, res){
+  // const email = req.params.email;
+  // if(email){
+  //   req.webtaskContext.storage.get(function(err, data){
+  //     if(err){
+  //       res.writeHead(400, { 'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify(RESPONSE.ERROR));
+  //     }
 
-      data = data || [];
+  //     data = data || [];
 
-      if(_.indexOf(data, email) == -1){
-        res.writeHead(200, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify({subscribed: false}));
-      } else {
-        res.writeHead(200, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify({subscribed: true}));
-      }
-    })
-  } else {
-    res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.end(JSON.stringify(RESPONSE.ERROR));
-  }
+  //     if(_.indexOf(data, email) == -1){
+  //       res.writeHead(200, { 'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify({subscribed: false}));
+  //     } else {
+  //       res.writeHead(200, { 'Content-Type': 'application/json'});
+  //       res.end(JSON.stringify({subscribed: true}));
+  //     }
+  //   })
+  // } else {
+  //   res.writeHead(200, { 'Content-Type': 'application/json'});
+  //   res.end(JSON.stringify(RESPONSE.ERROR));
+  // }
+  console.log('here', req.user);
+  res.writeHead(200, { 'Content-Type': 'application/json'});
+  res.end(JSON.stringify(RESPONSE.ERROR));
 })
 
 module.exports = Webtask.fromExpress(app).auth0({
-  exclude : ['/subscribe'],
   loginError: function (error, ctx, req, res, baseUrl) {
     res.writeHead(401, { 'Content-Type': 'application/json'})
     res.end(JSON.stringify(RESPONSE.UNAUTHORIZED))
