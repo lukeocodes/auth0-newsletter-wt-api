@@ -79,7 +79,7 @@ app.get('/subscribe', (req, res) => {
 
           if ( _.indexOf(data, email) == -1 ) {
             data.push(email);
-            req.webtaskContext.storage.set(data, err => {
+            req.webtaskContext.storage.set(data, (err) => {
               if ( err ) {
                 responseKey = 'ERROR';
               } else {
