@@ -62,12 +62,12 @@ const sendResponse = (key, res) => {
   res.end(JSON.stringify(RESPONSE[key]));
 }
 
-app.post('/subscribe', (req, res) => {
+app.get('/subscribe', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE.OK));
 })
 
-app.post('/unsubscribe', (req, res) => {
+app.get('/unsubscribe', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE.OK));
 })
