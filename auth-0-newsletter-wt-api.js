@@ -27,7 +27,6 @@ const RESPONSE = {
 };
 
 const app = new express();
-let userProfile = {};
 
 app.use((req, res, next) => { 
   const issuer = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/`;
@@ -41,20 +40,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`;
-  userProfile = async () => {
-    return await axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
+const userProfile = () => {
+  axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
     .then(response => {
-      console.log(response.data);
       return response.data;
     })
     .catch(console.error);
-  }
-    
-    console.log(userProfile());
-  next();
-});
+};
 
 app.use((req, res, next) => {
   // console.log(userProfile);
