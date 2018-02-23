@@ -58,7 +58,7 @@ const userProfile = (req) => {
 };
 
 const sendResponse = (key, res) => {
-  res.writeHead(RESPONSE[key].statusCode);
+  // res.writeHead(RESPONSE[key].statusCode);
   res.json(RESPONSE[key]);
 }
 
