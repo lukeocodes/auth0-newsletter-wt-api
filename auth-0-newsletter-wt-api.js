@@ -74,6 +74,8 @@ app.get('/subscribe', (req, res) => {
           if ( err ) {
 console.log('error 1');
             responseKey = 'ERROR';
+
+          sendResponse(responseKey, res);
           }
 
           data = data || [];
@@ -85,16 +87,20 @@ console.log('error 1');
               if ( err === undefined ) {
 console.log('ok 2');
                 responseKey = 'OK';
+
+          sendResponse(responseKey, res);
               } else {
 console.log('error 2');
                 responseKey = 'ERROR';
+
+          sendResponse(responseKey, res);
               }
             })
           } else {
             responseKey = 'DUPLICATE';
-          }
 
           sendResponse(responseKey, res);
+          }
         })
       } else {
 console.log('error 3');
