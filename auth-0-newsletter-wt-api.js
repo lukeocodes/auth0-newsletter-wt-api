@@ -46,16 +46,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => { 
-  const userProfile = () => {
-    const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
-    return axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
-      .then(response => {
-        return response.data;
-      })
-      .catch(console.error);
-  };
-});
+app.locals.userProfile = (req) => {
+  const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
+  return axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
+    .then(response => {
+      return response.data;
+    })
+    .catch(console.error);
+};
 
 app.use(bodyParser.json());
 
