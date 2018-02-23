@@ -37,6 +37,8 @@ app.use((req, res, next) => {
     issuer: issuer,
     algorithms: [ 'RS256' ]
   })(req, res, next); 
+  
+  next();
 });
 
 app.use((req, res, next) => { 
@@ -60,10 +62,14 @@ app.use((req, res, next) => {
       }
     .catch(console.error);
   });
+  
+  next();
 });
 
 app.use((req, res, next) => {
   console.log(userProfile);
+
+  next();
 });
 
 app.use(bodyParser.json());
