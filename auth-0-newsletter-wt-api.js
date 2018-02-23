@@ -157,12 +157,12 @@ app.get('/subscribed', (req, res) => {
       } else {
         responseKey = 'ERROR';
       }
+    
+      response(result, res);
     })
     .catch(err => {
       response('ERROR', res);
     })
-    
-    response(result, res);
 })
 
 module.exports = Webtask.fromExpress(app);
