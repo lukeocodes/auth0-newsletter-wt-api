@@ -72,6 +72,7 @@ app.get('/subscribe', (req, res) => {
           let responseKey = 'ERROR';
 
           if ( err ) {
+console.log('error 1');
             responseKey = 'ERROR';
           }
 
@@ -81,6 +82,7 @@ app.get('/subscribe', (req, res) => {
             data.push(email);
             req.webtaskContext.storage.set(data, function (err) {
               if ( err ) {
+console.log('error 2');
                 responseKey = 'ERROR';
               } else {
                 responseKey = 'OK';
@@ -93,10 +95,12 @@ app.get('/subscribe', (req, res) => {
           sendResponse(responseKey, res);
         })
       } else {
+console.log('error 3');
         sendResponse('ERROR', res);
       }
     })
     .catch(err => {
+console.log('error 4');
       sendResponse('ERROR', res);
     });
 });
@@ -111,6 +115,7 @@ app.get('/unsubscribe', (req, res) => {
           let responseKey = 'ERROR';
 
           if ( err ) {
+console.log('error 1');
             responseKey = 'ERROR';
           }
 
@@ -119,11 +124,13 @@ app.get('/unsubscribe', (req, res) => {
           const index = _.indexOf(data, email);
 
           if ( index == -1 ) {
+console.log('error 2');
             responseKey = 'ERROR';
           } else {
             data.splice(index, 1);
             req.webtaskContext.storage.set(data, function (err) {
               if ( err ) {
+console.log('error 3');
                 responseKey = 'ERROR';
               } else {
                 responseKey = 'UNSUBSCRIBED';
@@ -134,10 +141,12 @@ app.get('/unsubscribe', (req, res) => {
           sendResponse(responseKey, res);
         })
       } else {
+console.log('error 4');
         sendResponse('ERROR', res);
       }
     })
     .catch(err => {
+console.log('error 5');
       sendResponse('ERROR', res);
     });
 });
@@ -153,6 +162,7 @@ app.get('/subscribed', (req, res) => {
           let responseKey = 'ERROR';
 
           if ( err ) {
+console.log('error 1');
             responseKey = 'ERROR';
           }
 
@@ -167,10 +177,12 @@ app.get('/subscribed', (req, res) => {
           sendResponse(responseKey, res);
         })
       } else {
+console.log('error 2');
         sendResponse('ERROR', res);
       }
     })
     .catch(err => {
+console.log('error 3');
       sendResponse('ERROR', res);
     });
 });
