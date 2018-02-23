@@ -133,6 +133,7 @@ console.log('error 2');
 console.log('error 3');
                 responseKey = 'ERROR';
               } else {
+console.log('UNSUBSCRIBED 3');
                 responseKey = 'UNSUBSCRIBED';
               }
             })
