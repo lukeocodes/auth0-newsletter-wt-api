@@ -42,16 +42,12 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  axios.get(`https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`, { headers: { Authorization: req.headers.authorization }})
+  const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`;
+  axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
     .then(response => {
-      console.log(response.data);
-      
       userProfile = response.data;
     })
     .catch(console.error);
-    
-    // console.log(userProfile);
-    
   next();
 });
 
