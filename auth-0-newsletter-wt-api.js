@@ -46,7 +46,7 @@ app.use((req, res, next) => {
     issuer: `https://${secrets.AUTH0_DOMAIN}/`,
     algorithms: ['RS256'],
   });
-  userProfile = {hello: 'world'};
+  userProfile.hello = 'world';
   return validateAccessToken(req, res, next);
 });
 
