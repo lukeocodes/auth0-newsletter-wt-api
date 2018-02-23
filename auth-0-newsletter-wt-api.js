@@ -6,8 +6,26 @@ import jwt from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
 import _ from 'lodash';
 
-const app = new express();
+const RESPONSE = {
+  OK : {
+    statusCode : 200,
+    message: "You have successfully subscribed to the newsletter!",
+  },
+  DUPLICATE : {
+    status : 400,
+    message : "You are already subscribed."
+  },
+  ERROR : {
+    statusCode : 400,
+    message: "Something went wrong. Please try again."
+  },
+  UNAUTHORIZED : {
+    statusCode : 401,
+    message : "You must be logged in to access this resource."
+  }
+};
 
+const app = new express();
 app.use((req, res, next) => {
   const secrets = req.webtaskContext.secrets;
   const validateAccessToken = jwt({
@@ -29,25 +47,6 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
-
-const RESPONSE = {
-  OK : {
-    statusCode : 200,
-    message: "You have successfully subscribed to the newsletter!",
-  },
-  DUPLICATE : {
-    status : 400,
-    message : "You are already subscribed."
-  },
-  ERROR : {
-    statusCode : 400,
-    message: "Something went wrong. Please try again."
-  },
-  UNAUTHORIZED : {
-    statusCode : 401,
-    message : "You must be logged in to access this resource."
-  }
-};
 
 app.post('/subscribe', function(req, res){
   // var email = req.body.email;
