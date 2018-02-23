@@ -81,6 +81,7 @@ console.log('error 1');
           if ( _.indexOf(data, email) == -1 ) {
             data.push(email);
             req.webtaskContext.storage.set(data, function (err) {
+              console.log(err);
               if ( err ) {
 console.log('error 2');
                 responseKey = 'ERROR';
@@ -129,6 +130,7 @@ console.log('error 2');
           } else {
             data.splice(index, 1);
             req.webtaskContext.storage.set(data, function (err) {
+              console.log(err);
               if ( err ) {
 console.log('error 3');
                 responseKey = 'ERROR';
