@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   axios.get(`https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`, { headers: { Authorization: req.headers.authorization }})
-    .then(profileResponse) => {
+    .then(profileResponse => {
       userProfile = {
         user_id: profileResponse.data.sub,
         user_info: {
@@ -52,9 +52,9 @@ app.use((req, res, next) => {
           maxScore: 0,
         },
       }
+    })
     .catch(console.error);
-  });
-  
+    
   next();
 });
 
