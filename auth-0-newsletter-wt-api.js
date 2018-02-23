@@ -55,7 +55,7 @@ const userProfile = (req) => {
     .catch(console.error);
 };
 
-app.locals.sendResponse = (key, res) => {
+const sendResponse = (key, res) => {
   res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE[key]));
 }
@@ -156,12 +156,16 @@ app.get('/subscribed', (req, res) => {
             responseKey = 'OK';
           }
 
-          app.locals.sendResponse(responseKey, res);
+          sendResponse(responseKey, res);
         })
       } else {
         console.log('no email');
-        app.locals.sendResponse('ERROR', res);
+        sendResponse('ERROR', res);
       }
+    })
+    .catch(err => {
+      console.log(err);
+      sendResponse('ERROR', res);
     })
 })
 
