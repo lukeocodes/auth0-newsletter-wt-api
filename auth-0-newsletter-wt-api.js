@@ -30,17 +30,35 @@ const app = new express();
 let userProfile = {};
 
 app.use((req, res, next) => { 
-  const issuer = 'https://' + req.webtaskContext.secrets.AUTH0_DOMAIN + '/';
+  const issuer = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/`;
   jwt({
-    secret: jwksRsa.expressJwtSecret({ jwksUri: issuer + '.well-known/jwks.json' }),
+    secret: jwksRsa.expressJwtSecret({ jwksUri: `${issuer}.well-known/jwks.json` }),
     audience: req.webtaskContext.secrets.AUTH0_AUDIENCE,
     issuer: issuer,
     algorithms: [ 'RS256' ]
-  })(req, res, next);
+  })(req, res, next); 
 });
 
 app.use((req, res, next) => { 
-  console.log(req.user)
+  const profileRequestConfig = {
+    method: 'get',
+    url: `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`,
+    headers: {
+      Authorization: req.headers.authorization,
+    },
+  };
+
+  axios(profileRequestConfig)
+    .then((profileResponse) => {
+      userProfile = {
+        user_id: profileResponse.data.sub,
+        user_info: {
+          name: profileResponse.data.nickname || profileResponse.data.name,
+          picture: profileResponse.data.picture,
+          maxScore: 0,
+        },
+      }
+    .catch(console.error);
 })
 
 app.use(bodyParser.json());
