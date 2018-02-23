@@ -46,6 +46,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(bodyParser.json());
+
 const userProfile = (req) => {
   const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
   return axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
@@ -54,7 +56,6 @@ const userProfile = (req) => {
     })
     .catch(console.error);
 };
-app.use(bodyParser.json());
 
 const sendResponse = (key, res) => {
   res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
