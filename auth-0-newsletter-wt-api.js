@@ -146,21 +146,21 @@ app.get('/subscribed', (req, res) => {
             console.log(err);
             responseKey = 'ERROR';
           }
-    
+
           data = data || [];
-    
+
           if(_.indexOf(data, email) == -1){
             responseKey = 'UNSUBSCRIBED';
           } else {
             responseKey = 'OK';
           }
+
+          response(responseKey, res);
         })
       } else {
         console.log('no email');
-        responseKey = 'ERROR';
+        response('ERROR', res);
       }
-    
-      response(responseKey, res);
     })
     .catch(err => {
       console.log(err);
