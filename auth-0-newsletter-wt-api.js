@@ -156,11 +156,8 @@ app.get('/subscribed', (req, res) => {
       } else {
         response('ERROR', res);
       }
-
-      response('OK', res);
     })
     .catch(err => {
-      // console.error(err)
       response('ERROR', res);
     })
 })
