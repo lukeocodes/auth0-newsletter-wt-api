@@ -73,7 +73,7 @@ app.get('/subscribe', (req, res) => {
 
           if ( err ) {
 console.log('error 1');
-            responseKey = 'ERROR';
+            responseKey = 'ERROR'; 
           }
 
           data = data || [];
