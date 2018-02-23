@@ -10,24 +10,27 @@ import _ from 'lodash';
 const RESPONSE = {
   OK : {
     statusCode : 200,
-    code: 'subscribed',
+    status: 'subscribed',
     message: 'You have successfully subscribed to the newsletter!'
   },
   UNSUBSCRIBED : {
     statusCode : 200,
-    code: 'unsubscribed',
+    status: 'unsubscribed',
     message: 'You have successfully unsubscribed from the newsletter!'
   },
   DUPLICATE : {
     statusCode : 400,
+    status: 'duplicate',
     message : 'You are already subscribed.'
   },
   ERROR : {
     statusCode : 400,
+    status: 'error',
     message: 'Something went wrong. Please try again.'
   },
   UNAUTHORIZED : {
     statusCode : 401,
+    status: 'unauthorized',
     message : 'You must be logged in to access this resource.'
   }
 };
@@ -58,8 +61,7 @@ const userProfile = (req) => {
 };
 
 const sendResponse = (key, res) => {
-  res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE[key]));
+  res.status(RESPONSE[key].statusCode).send(RESPONSE[key]);
 }
 
 app.get('/subscribe', (req, res) => {
