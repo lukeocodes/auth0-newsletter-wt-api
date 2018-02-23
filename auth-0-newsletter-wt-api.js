@@ -59,7 +59,8 @@ app.use((req, res, next) => {
         },
       }
     .catch(console.error);
-})
+  });
+});
 
 app.use(bodyParser.json());
 
