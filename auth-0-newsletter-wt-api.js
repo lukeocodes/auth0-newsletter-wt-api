@@ -69,13 +69,8 @@ app.get('/subscribe', (req, res) => {
 
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
-          let responseKey = 'ERROR';
-
           if ( err ) {
-console.log('error 1');
-            responseKey = 'ERROR';
-
-          sendResponse(responseKey, res);
+            sendResponse('ERROR', res);
           }
 
           data = data || [];
@@ -85,32 +80,20 @@ console.log('error 1');
             req.webtaskContext.storage.set(data, function (err) {
               console.log(err === undefined);
               if ( err === undefined ) {
-console.log('ok 2');
-                responseKey = 'OK';
-
-          sendResponse(responseKey, res);
+                sendResponse('OK', res);
               } else {
-console.log('error 2');
-                responseKey = 'ERROR';
-
-          sendResponse(responseKey, res);
+                sendResponse('ERROR', res);
               }
             })
           } else {
-            responseKey = 'DUPLICATE';
-
-          sendResponse(responseKey, res);
+            sendResponse('DUPLICATE', res);
           }
         })
       } else {
-console.log('error 3');
         sendResponse('ERROR', res);
       }
     })
-    .catch(err => {
-console.log('error 4');
-      sendResponse('ERROR', res);
-    });
+    .catch(console.error);
 });
 
 app.get('/unsubscribe', (req, res) => {
