@@ -163,10 +163,6 @@ app.get('/subscribed', (req, res) => {
         app.locals.sendResponse('ERROR', res);
       }
     })
-    .catch(err => {
-      console.log(err);
-      app.locals.sendResponse('ERROR', res);
-    })
 })
 
 module.exports = Webtask.fromExpress(app);
