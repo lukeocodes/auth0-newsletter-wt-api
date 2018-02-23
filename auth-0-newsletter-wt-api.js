@@ -56,7 +56,7 @@ const userProfile = (req) => {
 };
 
 const response = (key, res) => {
-  res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
+  res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(RESPONSE[key]));
 }
 
