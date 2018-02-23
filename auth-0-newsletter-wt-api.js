@@ -48,12 +48,6 @@ const userProfile = () => {
     .catch(console.error);
 };
 
-app.use((req, res, next) => {
-  // console.log(userProfile);
-
-  next();
-});
-
 app.use(bodyParser.json());
 
 app.post('/subscribe', (req, res) => {
@@ -129,6 +123,7 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
+  console.log(userProfile().then(res => {console.log(res)}));
   // const email = req.params.email;
   // if(email){
   //   req.webtaskContext.storage.get(function(err, data){
