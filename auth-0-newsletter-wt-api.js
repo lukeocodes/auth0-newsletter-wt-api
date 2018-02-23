@@ -43,14 +43,14 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   axios.get(`https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`, { headers: { Authorization: req.headers.authorization }})
-    .then(profileResponse => {
-      console.log(profileResponse);
+    .then(response => {
+      console.log(response.data);
       
       userProfile = {
-        user_id: profileResponse.data.sub,
+        user_id: response.data.sub,
         user_info: {
-          name: profileResponse.data.nickname || profileResponse.data.name,
-          picture: profileResponse.data.picture,
+          name: response.data.nickname || response.data.name,
+          picture: response.data.picture,
           maxScore: 0,
         }
       };
