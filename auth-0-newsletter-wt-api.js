@@ -57,11 +57,6 @@ const userProfile = (req) => {
     .catch(console.error);
 };
 
-const sendResponse = (key, res) => {
-  // res.writeHead(RESPONSE[key].statusCode);
-  res.json(RESPONSE[key]);
-}
-
 app.post('/subscribe', (req, res) => {
   // var email = req.body.email;
   // if(email){
@@ -135,7 +130,12 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
-  userProfile(req)
+  const sendResponse = (key, res) => {
+    res.writeHead(RESPONSE[key].statusCode);
+    res.json(RESPONSE[key]);
+  }
+
+  return userProfile(req)
     .then(result => {
       const email = result.email;
 
