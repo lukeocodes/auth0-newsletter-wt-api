@@ -10,19 +10,25 @@ import _ from 'lodash';
 const RESPONSE = {
   OK : {
     statusCode : 200,
-    message: "You have successfully subscribed to the newsletter!",
+    code: 'subscribed',
+    message: 'You have successfully subscribed to the newsletter!'
+  },
+  UNSUBSCRIBED : {
+    statusCode : 200,
+    code: 'unsubscribed',
+    message: 'You have successfully unsubscribed from the newsletter!'
   },
   DUPLICATE : {
-    status : 400,
-    message : "You are already subscribed."
+    statusCode : 400,
+    message : 'You are already subscribed.'
   },
   ERROR : {
     statusCode : 400,
-    message: "Something went wrong. Please try again."
+    message: 'Something went wrong. Please try again.'
   },
   UNAUTHORIZED : {
     statusCode : 401,
-    message : "You must be logged in to access this resource."
+    message : 'You must be logged in to access this resource.'
   }
 };
 
@@ -48,6 +54,11 @@ const userProfile = (req) => {
     })
     .catch(console.error);
 };
+
+const response = (key, res) => {
+  res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
+  res.end(JSON.stringify(RESPONSE[key]));
+}
 
 app.use(bodyParser.json());
 
@@ -124,7 +135,15 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
-  console.log(userProfile(req).then(res => {console.log(res)}));
+  userProfile(req)
+  .then(
+    console.error(err)
+    response('ERROR', res);
+  )
+  .catch(err => {
+    console.error(err)
+    response('ERROR', res);
+  })
   // const email = req.params.email;
   // if(email){
   //   req.webtaskContext.storage.get(function(err, data){
@@ -147,8 +166,7 @@ app.get('/subscribed', (req, res) => {
   //   res.writeHead(200, { 'Content-Type': 'application/json'});
   //   res.end(JSON.stringify(RESPONSE.ERROR));
   // }
-  res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.OK));
+
 })
 
 module.exports = Webtask.fromExpress(app);
