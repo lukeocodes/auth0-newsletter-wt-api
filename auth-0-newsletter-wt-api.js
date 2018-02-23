@@ -83,7 +83,6 @@ app.post('/subscribe', (req, res) => {
   //   res.writeHead(200, { 'Content-Type': 'application/json'});
   //   es.end(JSON.stringify(RESPONSE.ERROR));
   // }
-  console.log('here', userProfile);
   res.writeHead(200, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE.OK));
 })
@@ -121,7 +120,6 @@ app.post('/unsubscribe', (req, res) => {
   //   res.writeHead(200, { 'Content-Type': 'application/json'});
   //   res.end(JSON.stringify(RESPONSE.ERROR));
   // }
-  console.log('here', req.user);
   res.writeHead(200, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE.OK));
 })
@@ -149,7 +147,7 @@ app.get('/subscribed', (req, res) => {
   //   res.writeHead(200, { 'Content-Type': 'application/json'});
   //   res.end(JSON.stringify(RESPONSE.ERROR));
   // }
-  console.log('here', req.user);
+  console.log('here', userProfile);
   res.writeHead(200, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE.OK));
 })
