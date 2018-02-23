@@ -40,7 +40,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const userProfile = () => {
+const userProfile = (req) => {
   const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
   axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
     .then(response => {
@@ -124,7 +124,7 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
-  console.log(userProfile().then(res => {console.log(res)}));
+  console.log(userProfile(req).then(res => {console.log(res)}));
   // const email = req.params.email;
   // if(email){
   //   req.webtaskContext.storage.get(function(err, data){
