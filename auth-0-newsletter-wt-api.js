@@ -77,7 +77,7 @@ app.get('/subscribe', (req, res) => {
 
           if ( _.indexOf(data, email) == -1 ) {
             data.push(email);
-            req.webtaskContext.storage.set(data, function (err) {
+            req.webtaskContext.storage.set(data, err => {
               if ( err === undefined ) {
                 sendResponse('OK', res);
               } else {
