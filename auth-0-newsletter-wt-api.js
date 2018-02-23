@@ -143,6 +143,7 @@ app.get('/subscribed', (req, res) => {
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
           if(err){
+            console.log(err);
             responseKey = 'ERROR';
           }
     
@@ -155,12 +156,14 @@ app.get('/subscribed', (req, res) => {
           }
         })
       } else {
+        console.log('no email');
         responseKey = 'ERROR';
       }
     
       response(responseKey, res);
     })
     .catch(err => {
+      console.log(err);
       response('ERROR', res);
     })
 })
