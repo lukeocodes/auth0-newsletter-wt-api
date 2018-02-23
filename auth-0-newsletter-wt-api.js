@@ -79,7 +79,7 @@ app.get('/subscribe', (req, res) => {
 
           if ( _.indexOf(data, email) == -1 ) {
             data.push(email);
-            req.webtaskContext.storage.set(data, (err) => {
+            req.webtaskContext.storage.set(data, function (err) {
               if ( err ) {
                 responseKey = 'ERROR';
               } else {
@@ -122,7 +122,7 @@ app.get('/unsubscribe', (req, res) => {
             responseKey = 'ERROR';
           } else {
             data.splice(index, 1);
-            req.webtaskContext.storage.set(data, (err) => {
+            req.webtaskContext.storage.set(data, function (err) {
               if ( err ) {
                 responseKey = 'ERROR';
               } else {
