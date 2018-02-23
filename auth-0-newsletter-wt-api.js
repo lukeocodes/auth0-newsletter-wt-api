@@ -130,6 +130,7 @@ app.get('/subscribed', function(req, res){
 
 module.exports = Webtask.fromExpress(app).auth0({
   loginError: function (error, ctx, req, res, baseUrl) {
+    console.log(error);
     res.writeHead(401, { 'Content-Type': 'application/json'})
     res.end(JSON.stringify(RESPONSE.UNAUTHORIZED))
   }
