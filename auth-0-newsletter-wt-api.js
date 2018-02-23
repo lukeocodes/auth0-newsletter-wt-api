@@ -55,11 +55,10 @@ const userProfile = (req) => {
     .catch(console.error);
 };
 
-// const sendResponse = (key, res) => {
-//   res.setHeader('Content-Type', 'application/json');
-//   res.statusCode = RESPONSE[key].statusCode;
-//   res.end(JSON.stringify(RESPONSE[key]));
-// }
+const sendResponse = (key, res) => {
+  res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
+  res.end(JSON.stringify(RESPONSE[key]));
+}
 
 app.use(bodyParser.json());
 
@@ -142,32 +141,31 @@ app.get('/subscribed', (req, res) => {
 
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
+          let responseKey = 'ERROR';
+
           if(err){
             console.log(err);
-            res.writeHead(RESPONSE.ERROR.statusCode, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify(RESPONSE.ERROR));
+            responseKey = 'ERROR';
           }
 
           data = data || [];
 
           if(_.indexOf(data, email) == -1){
-            res.writeHead(RESPONSE.UNSUBSCRIBED.statusCode, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify(RESPONSE.UNSUBSCRIBED));
+            responseKey = 'UNSUBSCRIBED';
           } else {
-            res.writeHead(RESPONSE.OK.statusCode, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify(RESPONSE.OK));
+            responseKey = 'OK';
           }
+
+          sendResponse(responseKey, res);
         })
       } else {
         console.log('no email');
-        res.writeHead(RESPONSE.ERROR.statusCode, { 'Content-Type': 'application/json'});
-        res.end(JSON.stringify(RESPONSE.ERROR));
+        sendResponse('ERROR', res);
       }
     })
     .catch(err => {
       console.log(err);
-      res.writeHead(RESPONSE.ERROR.statusCode, { 'Content-Type': 'application/json'});
-      res.end(JSON.stringify(RESPONSE.ERROR));
+      sendResponse('ERROR', res);
     })
 })
 
