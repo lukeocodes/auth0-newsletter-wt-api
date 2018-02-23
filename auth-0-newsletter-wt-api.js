@@ -52,12 +52,12 @@ app.use((req, res, next) => {
     .catch(console.error);
   }
     
-    console.log(userProfile);
+    console.log(userProfile());
   next();
 });
 
 app.use((req, res, next) => {
-  console.log(userProfile);
+  // console.log(userProfile);
 
   next();
 });
