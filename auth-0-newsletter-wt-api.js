@@ -29,27 +29,6 @@ const RESPONSE = {
 const app = new express();
 let userProfile = {};
 
-// app.use((req, res, next) => {
-//   const secrets = req.webtaskContext.secrets;
-//   const validateAccessToken = jwt({
-//     // Dynamically provide a signing key based on the kid
-//     // in the header and the singing keys provided by the JWKS endpoint.
-//     secret: jwksRsa.expressJwtSecret({
-//       cache: true,
-//       rateLimit: true,
-//       jwksRequestsPerMinute: 5,
-//       jwksUri: `https://${secrets.AUTH0_DOMAIN}/.well-known/jwks.json`,
-//     }),
-
-//     // Validate the audience and the issuer.
-//     audience: secrets.AUTH0_AUDIENCE,
-//     issuer: `https://${secrets.AUTH0_DOMAIN}/`,
-//     algorithms: ['RS256'],
-//   });
-  
-//   return validateAccessToken(req, res, next);
-// });
-
 app.use((req, res, next) => { 
   const issuer = 'https://' + req.webtaskContext.secrets.AUTH0_DOMAIN + '/';
   jwt({
