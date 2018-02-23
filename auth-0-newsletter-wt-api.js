@@ -26,6 +26,7 @@ const RESPONSE = {
 };
 
 const app = new express();
+const userProfile = {};
 
 app.use((req, res, next) => {
   const secrets = req.webtaskContext.secrets;
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
     issuer: `https://${secrets.AUTH0_DOMAIN}/`,
     algorithms: ['RS256'],
   });
+  userProfile = {hello: 'world'};
   return validateAccessToken(req, res, next);
 });
 
