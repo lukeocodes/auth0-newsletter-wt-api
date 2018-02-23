@@ -122,7 +122,7 @@ app.get('/unsubscribe', (req, res) => {
             responseKey = 'ERROR';
           } else {
             data.splice(index, 1);
-            req.webtaskContext.storage.set(data, err => {
+            req.webtaskContext.storage.set(data, (err) => {
               if ( err ) {
                 responseKey = 'ERROR';
               } else {
