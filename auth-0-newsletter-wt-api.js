@@ -54,13 +54,12 @@ const userProfile = (req) => {
     })
     .catch(console.error);
 };
+app.use(bodyParser.json());
 
 const sendResponse = (key, res) => {
   res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE[key]));
 }
-
-app.use(bodyParser.json());
 
 app.post('/subscribe', (req, res) => {
   // var email = req.body.email;
