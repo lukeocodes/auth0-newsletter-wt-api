@@ -136,14 +136,14 @@ app.post('/unsubscribe', (req, res) => {
 
 app.get('/subscribed', (req, res) => {
   userProfile(req)
-  .then(
-    console.error(err)
-    response('ERROR', res);
-  )
-  .catch(err => {
-    console.error(err)
-    response('ERROR', res);
-  })
+    .then(result => {
+      console.log('here', result);
+      response('OK', res);
+    })
+    .catch(err => {
+      console.error(err)
+      response('ERROR', res);
+    })
   // const email = req.params.email;
   // if(email){
   //   req.webtaskContext.storage.get(function(err, data){
