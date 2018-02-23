@@ -46,6 +46,7 @@ app.use((req, res, next) => {
   userProfile = async () => {
     return await axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
     .then(response => {
+      console.log(response.data);
       return response.data;
     })
     .catch(console.error);
