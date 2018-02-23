@@ -2,9 +2,32 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import Webtask from 'webtask-tools';
+import jwt from 'express-jwt';
+import jwksRsa from 'jwks-rsa';
 import _ from 'lodash';
 
 const app = new express();
+
+app.use((req, res, next) => {
+  const secrets = req.webtaskContext.secrets;
+  const validateAccessToken = jwt({
+    // Dynamically provide a signing key based on the kid
+    // in the header and the singing keys provided by the JWKS endpoint.
+    secret: jwksRsa.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: `https://${secrets.AUTH0_DOMAIN}/.well-known/jwks.json`,
+    }),
+
+    // Validate the audience and the issuer.
+    audience: secrets.AUTH0_AUDIENCE,
+    issuer: `https://${secrets.AUTH0_DOMAIN}/`,
+    algorithms: ['RS256'],
+  });
+  return validateAccessToken(req, res, next);
+});
+
 app.use(bodyParser.json());
 
 const RESPONSE = {
@@ -128,10 +151,4 @@ app.get('/subscribed', function(req, res){
   res.end(JSON.stringify(RESPONSE.ERROR));
 })
 
-module.exports = Webtask.fromExpress(app).auth0({
-  loginError: function (error, ctx, req, res, baseUrl) {
-    console.log(error);
-    res.writeHead(401, { 'Content-Type': 'application/json'})
-    res.end(JSON.stringify(RESPONSE.UNAUTHORIZED))
-  }
-});
+module.exports = Webtask.fromExpress(app);
