@@ -1,4 +1,3 @@
-'use latest';
 import axios from 'axios';
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -63,14 +62,37 @@ const sendResponse = (key, res) => {
 }
 
 app.get('/subscribe', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.OK));
-})
+ userProfile(req)
+    .then(result => {
+      const email = result.email;
+
+      if ( email ) {
+        
+      } else {
+        sendResponse('ERROR', res);
+      }
+    })
+    .catch(err => {
+      sendResponse('ERROR', res);
+    });
+});
 
 app.get('/unsubscribe', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.OK));
-})
+ userProfile(req)
+    .then(result => {
+      const email = result.email;
+
+      if ( email ) {
+        
+      } else {
+        sendResponse('ERROR', res);
+      }
+    })
+    .catch(err => {
+      sendResponse('ERROR', res);
+    });
+});
+
 
 app.get('/subscribed', (req, res) => {
   userProfile(req)
@@ -102,7 +124,7 @@ app.get('/subscribed', (req, res) => {
     })
     .catch(err => {
       sendResponse('ERROR', res);
-    })
-})
+    });
+});
 
 module.exports = Webtask.fromExpress(app);
