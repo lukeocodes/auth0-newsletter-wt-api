@@ -54,7 +54,7 @@ app.use((req, res, next) => {
   const issuer = 'https://' + req.webtaskContext.secrets.AUTH0_DOMAIN + '/';
   jwt({
     secret: jwksRsa.expressJwtSecret({ jwksUri: issuer + '.well-known/jwks.json' }),
-    audience: req.webtaskContext.secrets.AUDIENCE,
+    audience: req.webtaskContext.secrets.AUTH0_AUDIENCE,
     issuer: issuer,
     algorithms: [ 'RS256' ]
   })(req, res, next);
