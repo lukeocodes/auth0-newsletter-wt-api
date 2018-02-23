@@ -63,73 +63,11 @@ const sendResponse = (key, res) => {
 }
 
 app.post('/subscribe', (req, res) => {
-  // var email = req.body.email;
-  // if(email){
-  //   req.webtaskContext.storage.get(function(err, data){
-  //     if(err){
-  //       res.writeHead(400, { 'Content-Type': 'application/json'});
-  //       res.end(JSON.stringify(RESPONSE.ERROR));
-  //     }
-
-  //     data = data || [];
-
-  //     if(_.indexOf(data, email) == -1){
-  //       data.push(email);
-  //       req.webtaskContext.storage.set(data, function(err){
-  //         if(err){
-  //           res.writeHead(400, { 'Content-Type': 'application/json'});
-  //           res.end(JSON.stringify(RESPONSE.ERROR));
-  //         } else {
-  //           res.writeHead(200, { 'Content-Type': 'application/json'});
-  //           res.end(JSON.stringify(RESPONSE.OK));
-  //         }
-  //       })
-  //     } else {
-  //       res.writeHead(400, { 'Content-Type': 'application/json'});
-  //       res.end(JSON.stringify(RESPONSE.DUPLICATE));
-  //     }
-  //   })
-  // } else {
-  //   res.writeHead(200, { 'Content-Type': 'application/json'});
-  //   es.end(JSON.stringify(RESPONSE.ERROR));
-  // }
   res.writeHead(200, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE.OK));
 })
 
 app.post('/unsubscribe', (req, res) => {
-  // var email = req.body.email;
-  // if(email){
-  //   req.webtaskContext.storage.get(function(err, data){
-  //     if(err){
-  //       res.writeHead(400, { 'Content-Type': 'application/json'});
-  //       res.end(JSON.stringify(RESPONSE.ERROR));
-  //     }
-
-  //     data = data || [];
-
-  //     const index = _.indexOf(data, email);
-
-  //     if(index == -1){
-  //       res.writeHead(400, { 'Content-Type': 'application/json'});
-  //       res.end(JSON.stringify(RESPONSE.ERROR));
-  //     } else {
-  //       data.splice(index, 1);
-  //       req.webtaskContext.storage.set(data, function(err){
-  //         if(err){
-  //           res.writeHead(400, { 'Content-Type': 'application/json'});
-  //           res.end(JSON.stringify(RESPONSE.ERROR));
-  //         } else {
-  //           res.writeHead(200, { 'Content-Type': 'application/json'});
-  //           res.end(JSON.stringify(RESPONSE.OK));
-  //         }
-  //       })
-  //     }
-  //   })
-  // } else {
-  //   res.writeHead(200, { 'Content-Type': 'application/json'});
-  //   res.end(JSON.stringify(RESPONSE.ERROR));
-  // }
   res.writeHead(200, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE.OK));
 })
