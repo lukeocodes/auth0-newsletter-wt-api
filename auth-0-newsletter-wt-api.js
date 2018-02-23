@@ -44,14 +44,16 @@ app.use((req, res, next) => {
 app.use((req, res, next) => { 
   const profileRequestConfig = {
     method: 'get',
-    url: `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`,
+    url: ,
     headers: {
       Authorization: req.headers.authorization,
     },
   };
 
-  axios(profileRequestConfig)
-    .then((profileResponse) => {
+  axios.get(`https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`, { headers: {
+      Authorization: req.headers.authorization,
+    }})
+    .then(profileResponse) => {
       userProfile = {
         user_id: profileResponse.data.sub,
         user_info: {
