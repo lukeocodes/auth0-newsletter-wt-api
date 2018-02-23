@@ -46,25 +46,6 @@ app.use((req, res, next) => {
     issuer: `https://${secrets.AUTH0_DOMAIN}/`,
     algorithms: ['RS256'],
   });
-
-  axios({
-      method: 'get',
-      url: `https://${secrets.AUTH0_DOMAIN}/userinfo`,
-      headers: {
-        Authorization: req.headers.authorization,
-      },
-    })
-    .then((profileResponse) => {
-      userProfile = {
-        user_id: profileResponse.data.sub,
-        user_info: {
-          name: profileResponse.data.nickname || profileResponse.data.name,
-          picture: profileResponse.data.picture,
-          maxScore: 0,
-        },
-      };
-    })
-    .catch(console.error);
   
   return validateAccessToken(req, res, next);
 });
