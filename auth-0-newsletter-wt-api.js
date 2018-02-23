@@ -28,7 +28,7 @@ const RESPONSE = {
 
 const app = new express();
 let userProfile = {};
- 
+
 app.use((req, res, next) => {
   const secrets = req.webtaskContext.secrets;
   const validateAccessToken = jwt({
