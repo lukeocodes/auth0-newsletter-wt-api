@@ -93,22 +93,16 @@ app.get('/subscribed', (req, res) => {
           } else {
             responseKey = 'OK';
           }
-    console.log('here 2');
 
           sendResponse(responseKey, res);
         })
       } else {
-        console.log('no email');
         sendResponse('ERROR', res);
       }
     })
     .catch(err => {
-    console.log('here error');
-      console.log(err);
       sendResponse('ERROR', res);
     })
-    
-    console.log('here 1');
 })
 
 module.exports = Webtask.fromExpress(app);
