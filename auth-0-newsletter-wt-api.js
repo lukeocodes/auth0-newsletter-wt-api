@@ -137,37 +137,32 @@ app.post('/unsubscribe', (req, res) => {
 app.get('/subscribed', (req, res) => {
   userProfile(req)
     .then(result => {
-      console.log(result.email);
-      // console.log('here', result);
+      const email = result.email;
+
+      if ( email ) {
+        req.webtaskContext.storage.get((err, data) => {
+          if(err){
+            response('ERROR', res);
+          }
+    
+          data = data || [];
+    
+          if(_.indexOf(data, email) == -1){
+            response('UNSUBSCRIBED', res);
+          } else {
+            response('OK', res);
+          }
+        })
+      } else {
+        response('ERROR', res);
+      }
+
       response('OK', res);
     })
     .catch(err => {
       // console.error(err)
       response('ERROR', res);
     })
-  // const email = req.params.email;
-  // if(email){
-  //   req.webtaskContext.storage.get(function(err, data){
-  //     if(err){
-  //       res.writeHead(400, { 'Content-Type': 'application/json'});
-  //       res.end(JSON.stringify(RESPONSE.ERROR));
-  //     }
-
-  //     data = data || [];
-
-  //     if(_.indexOf(data, email) == -1){
-  //       res.writeHead(200, { 'Content-Type': 'application/json'});
-  //       res.end(JSON.stringify({subscribed: false}));
-  //     } else {
-  //       res.writeHead(200, { 'Content-Type': 'application/json'});
-  //       res.end(JSON.stringify({subscribed: true}));
-  //     }
-  //   })
-  // } else {
-  //   res.writeHead(200, { 'Content-Type': 'application/json'});
-  //   res.end(JSON.stringify(RESPONSE.ERROR));
-  // }
-
 })
 
 module.exports = Webtask.fromExpress(app);
