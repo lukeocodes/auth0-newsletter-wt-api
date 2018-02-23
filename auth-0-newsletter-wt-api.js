@@ -41,15 +41,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => { 
-  const profileRequestConfig = {
-    method: 'get',
-    url: ,
-    headers: {
-      Authorization: req.headers.authorization,
-    },
-  };
-
+app.use((req, res, next) => {
   axios.get(`https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`, { headers: { Authorization: req.headers.authorization }})
     .then(profileResponse) => {
       userProfile = {
