@@ -82,12 +82,12 @@ console.log('error 1');
             data.push(email);
             req.webtaskContext.storage.set(data, function (err) {
               console.log(err === undefined);
-              if ( err ) {
-console.log('error 2');
-                responseKey = 'ERROR';
-              } else {
+              if ( err === undefined ) {
 console.log('ok 2');
                 responseKey = 'OK';
+              } else {
+console.log('error 2');
+                responseKey = 'ERROR';
               }
             })
           } else {
