@@ -27,11 +27,6 @@ const RESPONSE = {
     statusCode : 400,
     status: 'error',
     message: 'Something went wrong. Please try again.'
-  },
-  UNAUTHORIZED : {
-    statusCode : 401,
-    status: 'unauthorized',
-    message : 'You must be logged in to access this resource.'
   }
 };
 
