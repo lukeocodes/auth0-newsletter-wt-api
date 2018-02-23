@@ -138,10 +138,11 @@ app.get('/subscribed', (req, res) => {
   userProfile(req)
     .then(result => {
       const email = result.email;
-      let responseKey;
 
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
+          let responseKey = 'ERROR';
+
           if(err){
             console.log(err);
             responseKey = 'ERROR';
