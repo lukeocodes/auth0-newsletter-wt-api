@@ -78,7 +78,6 @@ app.get('/subscribe', (req, res) => {
           if ( _.indexOf(data, email) == -1 ) {
             data.push(email);
             req.webtaskContext.storage.set(data, function (err) {
-              console.log(err === undefined);
               if ( err === undefined ) {
                 sendResponse('OK', res);
               } else {
@@ -103,11 +102,8 @@ app.get('/unsubscribe', (req, res) => {
 
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
-          let responseKey = 'ERROR';
-
           if ( err ) {
-console.log('error 1');
-            responseKey = 'ERROR';
+            sendResponse('ERROR', res);
           }
 
           data = data || [];
@@ -115,32 +111,23 @@ console.log('error 1');
           const index = _.indexOf(data, email);
 
           if ( index == -1 ) {
-console.log('error 2');
-            responseKey = 'ERROR';
+            sendResponse('ERROR', res);
           } else {
             data.splice(index, 1);
             req.webtaskContext.storage.set(data, function (err) {
-              console.log(err);
               if ( err ) {
-console.log('error 3');
-                responseKey = 'ERROR';
+                sendResponse('ERROR', res);
               } else {
-                responseKey = 'UNSUBSCRIBED';
+                sendResponse('UNSUBSCRIBED', res);
               }
             })
           }
-
-          sendResponse(responseKey, res);
         })
       } else {
-console.log('error 4');
         sendResponse('ERROR', res);
       }
     })
-    .catch(err => {
-console.log('error 5');
-      sendResponse('ERROR', res);
-    });
+    .catch(console.error);
 });
 
 
@@ -151,21 +138,17 @@ app.get('/subscribed', (req, res) => {
 
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
-          let responseKey = 'ERROR';
-
           if ( err ) {
-            responseKey = 'ERROR';
+            sendResponse('ERROR', res);
           }
 
           data = data || [];
 
           if ( _.indexOf(data, email) == -1 ) {
-            responseKey = 'UNSUBSCRIBED';
+            sendResponse('UNSUBSCRIBED', res);
           } else {
-            responseKey = 'OK';
+            sendResponse('OK', res);
           }
-
-          sendResponse(responseKey, res);
         })
       } else {
         sendResponse('ERROR', res);
