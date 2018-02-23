@@ -167,7 +167,6 @@ app.get('/subscribed', (req, res) => {
           let responseKey = 'ERROR';
 
           if ( err ) {
-console.log('error 1');
             responseKey = 'ERROR';
           }
 
@@ -182,14 +181,10 @@ console.log('error 1');
           sendResponse(responseKey, res);
         })
       } else {
-console.log('error 2');
         sendResponse('ERROR', res);
       }
     })
-    .catch(err => {
-console.log('error 3');
-      sendResponse('ERROR', res);
-    });
+    .catch(console.error);
 });
 
 module.exports = Webtask.fromExpress(app);
