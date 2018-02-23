@@ -137,6 +137,7 @@ app.post('/unsubscribe', (req, res) => {
 app.get('/subscribed', (req, res) => {
   userProfile(req)
     .then(result => {
+      console.log(result.email);
       // console.log('here', result);
       response('OK', res);
     })
