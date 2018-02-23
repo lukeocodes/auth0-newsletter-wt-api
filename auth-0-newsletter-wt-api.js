@@ -85,7 +85,7 @@ app.post('/subscribe', (req, res) => {
   // }
   console.log('here', req.user);
   res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.ERROR));
+  res.end(JSON.stringify(RESPONSE.OK));
 })
 
 app.post('/unsubscribe', (req, res) => {
@@ -123,7 +123,7 @@ app.post('/unsubscribe', (req, res) => {
   // }
   console.log('here', req.user);
   res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.ERROR));
+  res.end(JSON.stringify(RESPONSE.OK));
 })
 
 app.get('/subscribed', (req, res) => {
@@ -151,7 +151,7 @@ app.get('/subscribed', (req, res) => {
   // }
   console.log('here', req.user);
   res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.ERROR));
+  res.end(JSON.stringify(RESPONSE.OK));
 })
 
 module.exports = Webtask.fromExpress(app);
