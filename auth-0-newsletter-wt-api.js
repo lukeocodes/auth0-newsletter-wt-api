@@ -55,8 +55,8 @@ const userProfile = (req) => {
     .catch(console.error);
 };
 
-const response = (key, res) => {
-  res.setHeader('Content-Type', 'application/json');
+const sendResponse = (key, res) => {
+  res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE[key]));
 }
 
@@ -156,16 +156,16 @@ app.get('/subscribed', (req, res) => {
             responseKey = 'OK';
           }
 
-          response(responseKey, res);
+          sendResponse(responseKey, res);
         })
       } else {
         console.log('no email');
-        response('ERROR', res);
+        sendResponse('ERROR', res);
       }
     })
     .catch(err => {
       console.log(err);
-      response('ERROR', res);
+      sendResponse('ERROR', res);
     })
 })
 
