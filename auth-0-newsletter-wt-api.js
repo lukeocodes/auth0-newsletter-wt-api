@@ -57,6 +57,9 @@ app.post('/subscribe', function(req, res){
   //   res.writeHead(200, { 'Content-Type': 'application/json'});
   //   es.end(JSON.stringify(RESPONSE.ERROR));
   // }
+  console.log('here', req.user);
+  res.writeHead(200, { 'Content-Type': 'application/json'});
+  res.end(JSON.stringify(RESPONSE.ERROR));
 })
 
 app.post('/unsubscribe', function(req, res){
