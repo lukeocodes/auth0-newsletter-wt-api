@@ -46,16 +46,18 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
+app.use((req, res, next) => { 
+  const userProfile = () => {
+    const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
+    return axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
+      .then(response => {
+        return response.data;
+      })
+      .catch(console.error);
+  };
+});
 
-const userProfile = (req) => {
-  const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
-  return axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
-    .then(response => {
-      return response.data;
-    })
-    .catch(console.error);
-};
+app.use(bodyParser.json());
 
 app.post('/subscribe', (req, res) => {
   // var email = req.body.email;
@@ -130,7 +132,7 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
-  userProfile(req)
+  userProfile()
     .then(result => {
       const email = result.email;
 
