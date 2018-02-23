@@ -51,8 +51,8 @@ app.use((req, res, next) => {
           name: profileResponse.data.nickname || profileResponse.data.name,
           picture: profileResponse.data.picture,
           maxScore: 0,
-        },
-      }
+        }
+      };
     })
     .catch(console.error);
     
