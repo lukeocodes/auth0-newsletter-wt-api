@@ -87,7 +87,7 @@ console.log('error 2');
                 responseKey = 'ERROR';
               } else {
 console.log('ok 2');
-                sendResponse('OK', res);
+                responseKey = 'OK';
               }
             })
           } else {
