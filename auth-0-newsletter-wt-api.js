@@ -138,28 +138,31 @@ app.get('/subscribed', (req, res) => {
   userProfile(req)
     .then(result => {
       const email = result.email;
+      let responseKey;
 
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
           if(err){
-            response('ERROR', res);
+            responseKey = 'ERROR';
           }
     
           data = data || [];
     
           if(_.indexOf(data, email) == -1){
-            response('UNSUBSCRIBED', res);
+            responseKey = 'UNSUBSCRIBED';
           } else {
-            response('OK', res);
+            responseKey = 'OK';
           }
         })
       } else {
-        response('ERROR', res);
+        responseKey = 'ERROR';
       }
     })
     .catch(err => {
       response('ERROR', res);
     })
+    
+    response(result, res);
 })
 
 module.exports = Webtask.fromExpress(app);
