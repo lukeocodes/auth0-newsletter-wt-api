@@ -158,7 +158,7 @@ app.get('/subscribed', (req, res) => {
         responseKey = 'ERROR';
       }
     
-      response(result, res);
+      response(responseKey, res);
     })
     .catch(err => {
       response('ERROR', res);
