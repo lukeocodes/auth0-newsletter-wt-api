@@ -48,6 +48,8 @@ app.use((req, res, next) => {
       userProfile = response.data;
     })
     .catch(console.error);
+    
+    console.log(userProfile);
   next();
 });
 
