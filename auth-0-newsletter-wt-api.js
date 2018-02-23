@@ -41,6 +41,7 @@ app.use((req, res, next) => {
 });
 
 const userProfile = () => {
+  const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
   axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
     .then(response => {
       return response.data;
