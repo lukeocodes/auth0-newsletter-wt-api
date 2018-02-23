@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  // console.log(userProfile);
+  console.log(userProfile);
 
   next();
 });
