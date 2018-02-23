@@ -46,9 +46,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
-
-app.locals.userProfile = (req) => {
+const userProfile = (req) => {
   const userinfo = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/userinfo`
   return axios.get(userinfo, { headers: { Authorization: req.headers.authorization }})
     .then(response => {
@@ -56,6 +54,13 @@ app.locals.userProfile = (req) => {
     })
     .catch(console.error);
 };
+
+app.locals.sendResponse = (key, res) => {
+  res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
+  res.end(JSON.stringify(RESPONSE[key]));
+}
+
+app.use(bodyParser.json());
 
 app.post('/subscribe', (req, res) => {
   // var email = req.body.email;
@@ -130,7 +135,7 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
-  app.locals.userProfile(req)
+  userProfile(req)
     .then(result => {
       const email = result.email;
 
@@ -151,16 +156,16 @@ app.get('/subscribed', (req, res) => {
             responseKey = 'OK';
           }
 
-          sendResponse(responseKey, res);
+          app.locals.sendResponse(responseKey, res);
         })
       } else {
         console.log('no email');
-        sendResponse('ERROR', res);
+        app.locals.sendResponse('ERROR', res);
       }
     })
     .catch(err => {
       console.log(err);
-      sendResponse('ERROR', res);
+      app.locals.sendResponse('ERROR', res);
     })
 })
 
