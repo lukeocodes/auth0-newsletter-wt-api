@@ -34,6 +34,8 @@ const RESPONSE = {
 
 const app = new express();
 
+app.use(bodyParser.json());
+
 app.use((req, res, next) => { 
   const issuer = `https://${req.webtaskContext.secrets.AUTH0_DOMAIN}/`;
   jwt({
@@ -59,8 +61,6 @@ const sendResponse = (key, res) => {
   res.writeHead(RESPONSE[key].statusCode, { 'Content-Type': 'application/json'});
   res.end(JSON.stringify(RESPONSE[key]));
 }
-
-app.use(bodyParser.json());
 
 app.post('/subscribe', (req, res) => {
   // var email = req.body.email;
