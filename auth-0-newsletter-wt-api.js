@@ -39,6 +39,10 @@ app.use((req, res, next) => {
   })(req, res, next);
 });
 
+app.use((req, res, next) => { 
+  console.log(req.user)
+})
+
 app.use(bodyParser.json());
 
 app.post('/subscribe', (req, res) => {
