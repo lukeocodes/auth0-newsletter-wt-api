@@ -27,11 +27,6 @@ const RESPONSE = {
     statusCode : 400,
     status: 'error',
     message: 'Something went wrong. Please try again.'
-  },
-  UNAUTHORIZED : {
-    statusCode : 401,
-    status: 'unauthorized',
-    message : 'You must be logged in to access this resource.'
   }
 };
 
@@ -63,14 +58,72 @@ const sendResponse = (key, res) => {
 }
 
 app.get('/subscribe', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.OK));
-})
+  userProfile(req)
+    .then(result => {
+      const email = result.email;
+
+      if ( email ) {
+        req.webtaskContext.storage.get((err, data) => {
+          if ( err ) {
+            sendResponse('ERROR', res);
+          }
+
+          data = data || [];
+
+          if ( _.indexOf(data, email) == -1 ) {
+            data.push(email);
+            req.webtaskContext.storage.set(data, err => {
+              if ( err === undefined ) {
+                sendResponse('OK', res);
+              } else {
+                sendResponse('ERROR', res);
+              }
+            })
+          } else {
+            sendResponse('DUPLICATE', res);
+          }
+        })
+      } else {
+        sendResponse('ERROR', res);
+      }
+    })
+    .catch(console.error);
+});
 
 app.get('/unsubscribe', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'application/json'});
-  res.end(JSON.stringify(RESPONSE.OK));
-})
+  userProfile(req)
+    .then(result => {
+      const email = result.email;
+
+      if ( email ) {
+        req.webtaskContext.storage.get((err, data) => {
+          if ( err ) {
+            sendResponse('ERROR', res);
+          }
+
+          data = data || [];
+          
+          const index = _.indexOf(data, email);
+
+          if ( index == -1 ) {
+            sendResponse('ERROR', res);
+          } else {
+            data.splice(index, 1);
+            req.webtaskContext.storage.set(data, err => {
+              if ( err === undefined ) {
+                sendResponse('UNSUBSCRIBED', res);
+              } else {
+                sendResponse('ERROR', res);
+              }
+            })
+          }
+        })
+      } else {
+        sendResponse('ERROR', res);
+      }
+    })
+    .catch(console.error);
+});
 
 app.get('/subscribed', (req, res) => {
   userProfile(req)
@@ -79,30 +132,23 @@ app.get('/subscribed', (req, res) => {
 
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
-          let responseKey = 'ERROR';
-
-          if(err){
-            console.log(err);
-            responseKey = 'ERROR';
+          if ( err ) {
+            sendResponse('ERROR', res);
           }
 
           data = data || [];
 
-          if(_.indexOf(data, email) == -1){
-            responseKey = 'UNSUBSCRIBED';
+          if ( _.indexOf(data, email) == -1 ) {
+            sendResponse('UNSUBSCRIBED', res);
           } else {
-            responseKey = 'OK';
+            sendResponse('OK', res);
           }
-
-          sendResponse(responseKey, res);
         })
       } else {
         sendResponse('ERROR', res);
       }
     })
-    .catch(err => {
-      sendResponse('ERROR', res);
-    })
-})
+    .catch(console.error);
+});
 
 module.exports = Webtask.fromExpress(app);
