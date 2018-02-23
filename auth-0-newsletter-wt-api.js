@@ -137,11 +137,11 @@ app.post('/unsubscribe', (req, res) => {
 app.get('/subscribed', (req, res) => {
   userProfile(req)
     .then(result => {
-      console.log('here', result);
+      // console.log('here', result);
       response('OK', res);
     })
     .catch(err => {
-      console.error(err)
+      // console.error(err)
       response('ERROR', res);
     })
   // const email = req.params.email;
