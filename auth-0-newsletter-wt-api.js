@@ -63,12 +63,35 @@ const sendResponse = (key, res) => {
 }
 
 app.get('/subscribe', (req, res) => {
- userProfile(req)
+  userProfile(req)
     .then(result => {
       const email = result.email;
 
       if ( email ) {
-        
+        req.webtaskContext.storage.get((err, data) => {
+          let responseKey = 'ERROR';
+
+          if ( err ) {
+            responseKey = 'ERROR';
+          }
+
+          data = data || [];
+
+          if ( _.indexOf(data, email) == -1 ) {
+            data.push(email);
+            req.webtaskContext.storage.set(data, err => {
+              if ( err ) {
+                responseKey = 'ERROR';
+              } else {
+                responseKey = 'OK';
+              }
+            })
+          } else {
+            responseKey = 'DUPLICATE';
+          }
+
+          sendResponse(responseKey, res);
+        })
       } else {
         sendResponse('ERROR', res);
       }
@@ -79,12 +102,37 @@ app.get('/subscribe', (req, res) => {
 });
 
 app.get('/unsubscribe', (req, res) => {
- userProfile(req)
+  userProfile(req)
     .then(result => {
       const email = result.email;
 
       if ( email ) {
-        
+        req.webtaskContext.storage.get((err, data) => {
+          let responseKey = 'ERROR';
+
+          if ( err ) {
+            responseKey = 'ERROR';
+          }
+
+          data = data || [];
+          
+          const index = _.indexOf(data, email);
+
+          if ( index == -1 ) {
+            responseKey = 'ERROR';
+          } else {
+            data.splice(index, 1);
+            req.webtaskContext.storage.set(data, err => {
+              if ( err ) {
+                responseKey = 'ERROR';
+              } else {
+                responseKey = 'UNSUBSCRIBED';
+              }
+            })
+          }
+
+          sendResponse(responseKey, res);
+        })
       } else {
         sendResponse('ERROR', res);
       }
@@ -104,14 +152,13 @@ app.get('/subscribed', (req, res) => {
         req.webtaskContext.storage.get((err, data) => {
           let responseKey = 'ERROR';
 
-          if(err){
-            console.log(err);
+          if ( err ) {
             responseKey = 'ERROR';
           }
 
           data = data || [];
 
-          if(_.indexOf(data, email) == -1){
+          if ( _.indexOf(data, email) == -1 ) {
             responseKey = 'UNSUBSCRIBED';
           } else {
             responseKey = 'OK';
