@@ -86,6 +86,7 @@ console.log('error 1');
 console.log('error 2');
                 responseKey = 'ERROR';
               } else {
+console.log('ok 2');
                 responseKey = 'OK';
               }
             })
