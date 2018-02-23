@@ -114,11 +114,11 @@ app.get('/unsubscribe', (req, res) => {
             sendResponse('ERROR', res);
           } else {
             data.splice(index, 1);
-            req.webtaskContext.storage.set(data, function (err) {
-              if ( err ) {
-                sendResponse('ERROR', res);
-              } else {
+            req.webtaskContext.storage.set(data, err => {
+              if ( err === undefined ) {
                 sendResponse('UNSUBSCRIBED', res);
+              } else {
+                sendResponse('ERROR', res);
               }
             })
           }
@@ -129,7 +129,6 @@ app.get('/unsubscribe', (req, res) => {
     })
     .catch(console.error);
 });
-
 
 app.get('/subscribed', (req, res) => {
   userProfile(req)
