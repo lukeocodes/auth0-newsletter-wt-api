@@ -130,12 +130,7 @@ app.post('/unsubscribe', (req, res) => {
 })
 
 app.get('/subscribed', (req, res) => {
-  const sendResponse = (key, res) => {
-    res.writeHead(RESPONSE[key].statusCode);
-    res.json(RESPONSE[key]);
-  }
-
-  return userProfile(req)
+  userProfile(req)
     .then(result => {
       const email = result.email;
 
