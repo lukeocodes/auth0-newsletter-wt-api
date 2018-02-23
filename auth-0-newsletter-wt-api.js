@@ -72,7 +72,6 @@ app.get('/subscribe', (req, res) => {
           let responseKey = 'ERROR';
 
           if ( err ) {
-console.log('ERROR');
 console.log('error 1');
             responseKey = 'ERROR';
           }
@@ -83,16 +82,13 @@ console.log('error 1');
             data.push(email);
             req.webtaskContext.storage.set(data, function (err) {
               if ( err ) {
-console.log('ERROR');
 console.log('error 2');
                 responseKey = 'ERROR';
               } else {
-console.log('OK');
                 responseKey = 'OK';
               }
             })
           } else {
-console.log('DUPLICATE');
             responseKey = 'DUPLICATE';
           }
 
@@ -137,7 +133,6 @@ console.log('error 2');
 console.log('error 3');
                 responseKey = 'ERROR';
               } else {
-console.log('UNSUBSCRIBED');
                 responseKey = 'UNSUBSCRIBED';
               }
             })
