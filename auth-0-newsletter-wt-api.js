@@ -56,6 +56,8 @@ app.use((req, res, next) => {
     })
     .catch(console.error);
     
+    console.log(userProfile);
+    
   next();
 });
 
