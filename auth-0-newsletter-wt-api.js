@@ -1,11 +1,10 @@
-'use latest';
-import axios from 'axios';
-import bodyParser from 'body-parser';
-import express from 'express';
-import Webtask from 'webtask-tools';
-import jwt from 'express-jwt';
-import jwksRsa from 'jwks-rsa';
-import _ from 'lodash';
+const axios = require('axios');
+const bodyParser = require('body-parser');
+const express = require('express');
+const Webtask = require('webtask-tools');
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
+const _ = require('lodash');
 
 const RESPONSE = {
   OK : {
