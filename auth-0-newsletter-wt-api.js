@@ -65,6 +65,7 @@ app.get('/subscribe', (req, res) => {
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
           if ( err ) {
+            console.error(err);
             sendResponse('ERROR', res);
           }
 
@@ -76,6 +77,7 @@ app.get('/subscribe', (req, res) => {
               if ( err === undefined ) {
                 sendResponse('OK', res);
               } else {
+                console.error(err);
                 sendResponse('ERROR', res);
               }
             })
@@ -84,6 +86,7 @@ app.get('/subscribe', (req, res) => {
           }
         })
       } else {
+        console.error('profile has no email');
         sendResponse('ERROR', res);
       }
     })
@@ -98,6 +101,7 @@ app.get('/unsubscribe', (req, res) => {
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
           if ( err ) {
+            console.error(err);
             sendResponse('ERROR', res);
           }
 
@@ -106,6 +110,7 @@ app.get('/unsubscribe', (req, res) => {
           const index = _.indexOf(data, email);
 
           if ( index == -1 ) {
+            console.error('can\'t unsubscribe unsubscribed');
             sendResponse('ERROR', res);
           } else {
             data.splice(index, 1);
@@ -113,12 +118,14 @@ app.get('/unsubscribe', (req, res) => {
               if ( err === undefined ) {
                 sendResponse('UNSUBSCRIBED', res);
               } else {
+                console.error(err);
                 sendResponse('ERROR', res);
               }
             })
           }
         })
       } else {
+        console.error('profile has no email');
         sendResponse('ERROR', res);
       }
     })
@@ -133,6 +140,7 @@ app.get('/subscribed', (req, res) => {
       if ( email ) {
         req.webtaskContext.storage.get((err, data) => {
           if ( err ) {
+            console.error(err);
             sendResponse('ERROR', res);
           }
 
@@ -145,6 +153,7 @@ app.get('/subscribed', (req, res) => {
           }
         })
       } else {
+        console.error('profile has no email');
         sendResponse('ERROR', res);
       }
     })
